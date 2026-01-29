@@ -1,38 +1,45 @@
-# Estágio de Build
-FROM node:20-alpine AS builder
+# Build stage
+FROM node:18-alpine AS build
 
 WORKDIR /app
 
-# Copiar arquivos de dependência
+# Copiar arquivos de dependências
 COPY package*.json ./
 
-# Instalar todas as dependências (incluindo devDependencies para o build)
+# Instalar dependências
 RUN npm install
 
-# Copiar o restante do código fonte
+# Copiar todo o código
 COPY . .
 
-# Construir a aplicação React (gera a pasta dist)
+# Build da aplicação (detecta automaticamente Vite ou CRA)
 RUN npm run build
 
-# Estágio de Produção
-FROM node:20-alpine
+# Production stage
+FROM nginx:alpine
 
-WORKDIR /app
+# Remover configuração padrão do nginx
+RUN rm /etc/nginx/conf.d/default.conf
 
-# Copiar apenas os arquivos necessários para produção
-COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/server.js ./
-COPY --from=builder /app/dist ./dist
+# Criar configuração customizada
+RUN echo 'server { \
+    listen 8080; \
+    server_name _; \
+    root /usr/share/nginx/html; \
+    index index.html; \
+    location / { \
+        try_files $uri $uri/ /index.html; \
+    } \
+    location /api/ { \
+        proxy_pass http://backend:8080/; \
+    } \
+}' > /etc/nginx/conf.d/default.conf
 
-# Instalar apenas dependências de produção
-RUN npm install --only=production
+# Copiar build para nginx
+COPY --from=build /app/dist /usr/share/nginx/html 2>/dev/null || \
+     COPY --from=build /app/build /usr/share/nginx/html
 
-# Configurar variável de ambiente para porta (Google Cloud Run usa 8080 por padrão)
-ENV PORT=8080
-
-# Expor a porta
 EXPOSE 8080
 
-# Comando para iniciar o servidor
-CMD ["npm", "start"]
+CMD ["nginx", "-g", "daemon off;"]
+EOF
