@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Formulário de Pesquisa - Filmagem Profissional</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #e0e5ec;
+    }
+
+    /* Neumorphism Custom Shadows */
+    .neumorphic-shadow {
+      box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+    }
+    .neumorphic-shadow-inset {
+      box-shadow: inset 5px 5px 10px #a3b1c6, inset -5px -5px 10px #ffffff;
+    }
+    .neumorphic-shadow-concave {
+       box-shadow: inset 2px 2px 5px #a3b1c6, inset -2px -2px 5px #ffffff;
+    }
+    .neumorphic-shadow-active {
+        box-shadow: inset 2px 2px 5px #a3b1c6, inset -2px -2px 5px #ffffff;
+    }
+    .neumorphic-gradient-cta {
+        background-image: linear-gradient(145deg, #818cf8, #c084fc);
+    }
+    .neumorphic-gradient-cta-hover {
+        background-image: linear-gradient(145deg, #6366f1, #a855f7);
+    }
+
+    /* Custom Animations */
+    @keyframes shake {
+      10%, 90% { transform: translate3d(-1px, 0, 0); }
+      20%, 80% { transform: translate3d(2px, 0, 0); }
+      30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+      40%, 60% { transform: translate3d(4px, 0, 0); }
+    }
+    .animate-shake {
+      animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -1000px 0; }
+      100% { background-position: 1000px 0; }
+    }
+    .animate-shimmer {
+      background: linear-gradient(to right, #e0e5ec 4%, #f0f5fc 25%, #e0e5ec 36%);
+      background-size: 1000px 100%;
+      animation: shimmer 2s infinite linear;
+    }
+    
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .animate-scaleIn { animation: scaleIn 0.3s ease-out forwards; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .animate-fadeIn { animation: fadeIn 0.3s ease-out forwards; }
+
+    @keyframes shake-modal {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      75% { transform: translateX(10px); }
+    }
+    .animate-shake-modal { animation: shake-modal 0.3s ease-in-out; }
+
+  </style>
+<script type="importmap">
+{
+  "imports": {
+    "framer-motion": "https://esm.sh/framer-motion@^12.26.2",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "firebase/app": "https://esm.sh/firebase@12.8.0/app",
+    "firebase/firestore": "https://esm.sh/firebase@12.8.0/firestore",
+    "firebase/analytics": "https://esm.sh/firebase@12.8.0/analytics",
+    "firebase/": "https://esm.sh/firebase@^12.8.0/",
+    "recharts": "https://esm.sh/recharts@^2.12.7",
+    "react-ga4": "https://esm.sh/react-ga4@^2.1.0",
+    "ua-parser-js": "https://esm.sh/ua-parser-js@^1.0.37"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="text-slate-700">
+  <div id="root"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
