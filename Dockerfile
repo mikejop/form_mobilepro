@@ -42,4 +42,4 @@ COPY --from=build /app/dist /usr/share/nginx/html 2>/dev/null || \
 EXPOSE 8080
 
 CMD ["nginx", "-g", "daemon off;"]
-EOF
+
